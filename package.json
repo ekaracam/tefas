@@ -1,0 +1,29 @@
+{
+  "name": "tefas-crawler",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Fetches and maintains TEFAS fund history in a local SQLite database",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "cli": "tsx src/cli.ts",
+    "backfill": "tsx src/cli.ts backfill",
+    "daily": "tsx src/cli.ts daily",
+    "retry-failed": "tsx src/cli.ts retry-failed",
+    "status": "tsx src/cli.ts status",
+    "export": "tsx src/cli.ts export"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.4.1"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^24.3.0",
+    "tsx": "^4.20.4",
+    "typescript": "^5.9.2"
+  }
+}

@@ -1,0 +1,12 @@
+[Unit]
+Description=Retry failed TEFAS ranges a few hours after the daily run
+
+[Timer]
+# Late enough that any TEFAS throttling window from the evening run has expired.
+OnCalendar=*-*-* 02:30:00
+Timezone=Europe/Istanbul
+Persistent=true
+RandomizedDelaySec=20min
+
+[Install]
+WantedBy=timers.target

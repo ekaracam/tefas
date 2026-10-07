@@ -1,0 +1,22 @@
+[Unit]
+Description=Retry TEFAS ranges that previously failed
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=tefas
+Group=tefas
+WorkingDirectory=/opt/tefas
+ExecStart=/usr/bin/node /opt/tefas/dist/cli.js retry-failed
+TimeoutStartSec=4h
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/tefas/data /opt/tefas/logs /opt/tefas/exports
+RestrictAddressFamilies=AF_INET AF_INET6
+
+StandardOutput=journal
+StandardError=journal

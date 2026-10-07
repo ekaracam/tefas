@@ -1,0 +1,18 @@
+[Unit]
+Description=Run the TEFAS daily update every evening
+
+[Timer]
+# Turkish time regardless of the server's own timezone - TEFAS publishes in the
+# evening, so this is well clear of the midnight date rollover.
+OnCalendar=*-*-* 20:00:00
+Timezone=Europe/Istanbul
+
+# If the server was down at 20:00, run as soon as it is back. The crawler then
+# fills every missed day on its own.
+Persistent=true
+
+# Spread load off the exact minute; TEFAS throttles on bursts.
+RandomizedDelaySec=10min
+
+[Install]
+WantedBy=timers.target

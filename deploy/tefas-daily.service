@@ -1,0 +1,42 @@
+[Unit]
+Description=TEFAS daily fund data update
+Documentation=file:/opt/tefas/README.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=tefas
+Group=tefas
+WorkingDirectory=/opt/tefas
+ExecStart=/usr/bin/node /opt/tefas/dist/cli.js daily
+
+# A month-sized chunk plus throttle backoff can take a while; well under this.
+TimeoutStartSec=4h
+
+# Restart on transient failures. Exit code 2 means "some ranges failed" - the
+# retry-failed timer picks those up instead, so do not hammer TEFAS here.
+Restart=on-failure
+RestartSec=15min
+RestartPreventExitStatus=2
+StartLimitBurst=3
+
+# Hardening: the service only needs to read its code and write data/ and logs/.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/tefas/data /opt/tefas/logs /opt/tefas/exports
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6
+RestrictNamespaces=true
+LockPersonality=true
+MemoryDenyWriteExecute=false
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

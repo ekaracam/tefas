@@ -1,0 +1,16 @@
+node_modules/
+dist/
+data/
+logs/
+exports/
+.env
+*.log
+
+# Agent and internal working files (not part of the project)
+AGENTS.md
+CLAUDE.md
+PLAN.md
+.claude/
+.agents/
+.codex/
+.vscode/
